@@ -1,8 +1,12 @@
+from turtle import color
+from matplotlib import axes
 import pandas as pd
 import matplotlib as mlt
 import datetime
 
 #https://github.com/pandas-dev/pandas/blob/main/doc/cheatsheet/Pandas_Cheat_Sheet.pdf
+
+#https://www.w3schools.com/python/matplotlib_grid.asp
 
 dataslask = pd.read_csv("drivmedelspriser.csv", delimiter=";")
 #Visar datan som den är inläst
@@ -34,7 +38,20 @@ print(dataslask.dtypes)
 print(dataslask.describe())
 print(dataslask.corr())
 
+#Lite plots
 
+import matplotlib.pyplot as plt
+
+
+plt.plot(dataslask["DateTime"],dataslask["Diesel"],color="red")
+plt.plot(dataslask["DateTime"],dataslask["BF95"],color="blue")
+plt.grid() # visar ett runät
+plt.title("Plot över Datan")
+plt.xlabel("DateTime")
+plt.ylabel("Pris kr/liter")
+leg=["Diesel","BF95"]
+plt.legend(leg)
+plt.show()
 
 
     
