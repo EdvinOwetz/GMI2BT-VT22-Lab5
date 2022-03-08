@@ -1,3 +1,4 @@
+from dataclasses import replace
 from turtle import color
 from matplotlib import axes
 import pandas as pd
@@ -19,18 +20,30 @@ print("Corolation: ",dataslask.corr())
 print("Duplicated: ",dataslask.duplicated())
 
 print("\nStarting Data Cleaning\n")
-def format_dataframe(dataframe:pd.DataFrame,rep_oldstr:str,rep_newstr:str):
-    for index in range(len(dataframe)):
-        if(type(dataframe[index])==str):
-            dataframe[index]=dataframe[index].replace(rep_oldstr,rep_newstr)
-        else:
-            print(f"Not a string value, at [{index}] , type = {type(dataframe[index])}")
 
-format_dataframe(dataslask["BF95"],",",".")
-format_dataframe(dataslask["Diesel"],",",".")
+#ersätter "," med "."
+
+def format_str(x):
+    if type(x)==str:
+        return x.replace(",",".")
+    return x
+
+dataslask["BF95"]=dataslask["BF95"].apply(format_str)
+dataslask["Diesel"]=dataslask["Diesel"].apply(format_str)
+
+#format_dataframe(dataslask["BF95"],",",".")
+#format_dataframe(dataslask["Diesel"],",",".")
+
+# def format_dataframe(dataframe:pd.DataFrame,rep_oldstr:str,rep_newstr:str):
+#     for index in range(len(dataframe)):
+#         if(type(dataframe[index])==str):
+#             dataframe[index]=dataframe[index].replace(rep_oldstr,rep_newstr)
+#         else:
+#             print(f"Not a string value, at [{index}] , type = {type(dataframe[index])}")
+
 #Konverterar värderna till rätt typ
-dataslask[["BF95"]]=dataslask[["BF95"]].astype(float)
-dataslask[["Diesel"]]=dataslask[["Diesel"]].astype(float)
+dataslask["BF95"]=dataslask["BF95"].astype(float)
+dataslask["Diesel"]=dataslask["Diesel"].astype(float)
 dataslask["DateTime"]=pd.to_datetime(dataslask["DateTime"])
 #Visar data
 print(dataslask)
